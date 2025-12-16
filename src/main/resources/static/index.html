@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contáctanos</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0b1220;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.10);
+      --text: #eaf0ff;
+      --muted: rgba(234,240,255,.72);
+      --line: rgba(255,255,255,.12);
+      --accent: #8b5cf6;      /* morado */
+      --accent2: #22d3ee;     /* cian */
+      --danger: #fb7185;      /* rosado */
+    }
+
+    body{
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(900px 600px at 15% 10%, rgba(139,92,246,.35), transparent 60%),
+        radial-gradient(800px 540px at 85% 15%, rgba(34,211,238,.25), transparent 55%),
+        radial-gradient(900px 700px at 50% 110%, rgba(251,113,133,.12), transparent 55%),
+        var(--bg);
+    }
+
+    .glass{
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,.03));
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.45);
+      backdrop-filter: blur(10px);
+    }
+
+    .brand-dot{
+      width: 10px; height: 10px; border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 18px rgba(34,211,238,.35);
+      display: inline-block;
+      margin-right: .6rem;
+      transform: translateY(-1px);
+    }
+
+    .subtle{
+      color: var(--muted);
+    }
+
+    .form-control, .form-control:focus{
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.14);
+      color: var(--text);
+      box-shadow: none;
+    }
+
+    .form-control::placeholder{
+      color: rgba(234,240,255,.45);
+    }
+
+    .btn-gradient{
+      border: 0;
+      color: #0b1220;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      box-shadow: 0 12px 26px rgba(139,92,246,.22);
+      transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+    }
+    .btn-gradient:hover{
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow: 0 16px 32px rgba(139,92,246,.28);
+    }
+    .btn-gradient:active{
+      transform: translateY(0);
+      box-shadow: 0 10px 18px rgba(139,92,246,.20);
+    }
+
+    .float-in{
+      animation: floatIn .55s ease both;
+    }
+    @keyframes floatIn{
+      from{ opacity: 0; transform: translateY(14px) scale(.985); }
+      to{ opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Modal más “pro” */
+    .modal-content{
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(20,28,48,.92), rgba(10,16,30,.92));
+      color: var(--text);
+      box-shadow: 0 25px 70px rgba(0,0,0,.55);
+    }
+    .modal-backdrop.show{ opacity: .65; }
+    .modal-header{
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    .modal-footer{
+      border-top: 1px solid rgba(255,255,255,.10);
+    }
+    .status-pill{
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.35rem .7rem; border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      font-size:.875rem;
+      color: var(--muted);
+    }
+    .spinner-border{
+      width: 1rem; height: 1rem; border-width: .2em;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6">
+
+        <div class="glass p-4 p-md-5 float-in">
+          <div class="d-flex align-items-start justify-content-between flex-wrap gap-3 mb-3">
+            <div>
+              <h1 class="h3 mb-1">
+                <span class="brand-dot"></span>Contáctanos
+              </h1>
+              <p class="subtle mb-0">Envíanos tu mensaje y te respondemos lo antes posible.</p>
+            </div>
+
+            <span id="pillEstado" class="status-pill">
+              <span class="opacity-75">Estado:</span> <span id="estadoTexto">Listo</span>
+            </span>
+          </div>
+
+          <hr class="border-0" style="height:1px;background:rgba(255,255,255,.12)">
+
+          <form id="formContacto" class="mt-3" autocomplete="off">
+            <div class="mb-3">
+              <label class="form-label">Nombre</label>
+              <input type="text" id="nombre" class="form-control" placeholder="Ej: Johan Vasquez" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Tu Email</label>
+              <input type="email" id="email" class="form-control" placeholder="ejemplo@correo.com" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Mensaje</label>
+              <textarea id="mensaje" class="form-control" rows="4" placeholder="Escribe tu mensaje..." required></textarea>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button id="btnEnviar" type="submit" class="btn btn-gradient py-2">
+                <span id="btnText">Enviar mensaje</span>
+                <span id="btnSpinner" class="spinner-border ms-2 d-none" aria-hidden="true"></span>
+              </button>
+
+              <button id="btnLimpiar" type="button" class="btn btn-outline-light" style="border-color: rgba(255,255,255,.18);">
+                Limpiar
+              </button>
+            </div>
+
+            <p class="subtle small mt-3 mb-0">
+              * Este formulario hace <code class="text-info">POST</code> a <code class="text-info">/api/contacto</code>.
+            </p>
+          </form>
+        </div>
+
+        <p class="text-center subtle small mt-4">
+          © <span id="year"></span> Johan Vasquez — Todos los derechos reservados
+        </p>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal fade" id="resultadoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Resultado</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-0" id="modalBody">...</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-light" style="border-color: rgba(255,255,255,.18);" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // ============================
+    // UTILIDADES
+    // ============================
+    const $ = (id) => document.getElementById(id);
+
+    const modalEl = $("resultadoModal");
+    const modal = new bootstrap.Modal(modalEl);
+
+    function setEstado(texto){
+      $("estadoTexto").textContent = texto;
+    }
+
+    function setLoading(isLoading){
+      $("btnEnviar").disabled = isLoading;
+      $("btnLimpiar").disabled = isLoading;
+      $("btnSpinner").classList.toggle("d-none", !isLoading);
+      $("btnText").textContent = isLoading ? "Enviando..." : "Enviar mensaje";
+      setEstado(isLoading ? "Enviando" : "Listo");
+    }
+
+    function openModal(title, body, ok=true){
+      $("modalTitle").textContent = title;
+      $("modalBody").textContent = body;
+
+      // Cambia un poco el título según ok/error
+      $("modalTitle").style.color = ok ? "var(--accent2)" : "var(--danger)";
+
+      modal.show();
+    }
+
+    // ============================
+    // ENVÍO A SPRING BOOT
+    // ============================
+    $("formContacto").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const datos = {
+        nombre: $("nombre").value.trim(),
+        email: $("email").value.trim(),
+        mensaje: $("mensaje").value.trim()
+      };
+
+      // Validación mínima
+      if(!datos.nombre || !datos.email || !datos.mensaje){
+        openModal("Faltan datos", "Completa todos los campos antes de enviar.", false);
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        // ✅ OJO: le puse /api/contacto (con / al inicio)
+        const res = await fetch("/api/contacto", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(datos)
+        });
+
+        const text = await res.text();
+
+        if(!res.ok){
+          openModal("Error al enviar", text || "Hubo un error al enviar el mensaje.", false);
+          setLoading(false);
+          return;
+        }
+
+        openModal("¡Enviado!", text || "¡Mensaje enviado con éxito!");
+        $("formContacto").reset();
+
+      } catch (err) {
+        console.error(err);
+        openModal("Error de red", "No se pudo conectar con el servidor. Verifica que tu API esté corriendo.", false);
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    $("btnLimpiar").addEventListener("click", () => {
+      $("formContacto").reset();
+      setEstado("Listo");
+    });
+
+    $("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

@@ -13,7 +13,7 @@ public class EmailService {
     private JavaMailSender mailSender;
 
     // Esto lee tu correo desde application.properties para no escribirlo dos veces
-    @Value("${spring.mail.username}")
+    @Value("${brevo.from.email}")
     private String miCorreo;
 
     public void enviarCorreoContacto(String nombreCliente, String emailCliente, String mensajeCliente) {
@@ -58,4 +58,5 @@ public class EmailService {
         mail.setText(cuerpo);
         mailSender.send(mail);
     }
+
 }
